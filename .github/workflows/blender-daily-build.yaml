@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir ~/blender-build/lib
           cd ~/blender-build/lib
-          checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/linux_centos7_x86_64
+          svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/linux_centos7_x86_64
       - name: Build Blender
         run: |
           cd ~/blender-build/blender
