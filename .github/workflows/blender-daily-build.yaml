@@ -34,9 +34,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: "blender/blender"
-          path: ~/blender-build/blender
+          path: blender
       - name: ls
-        run: ls ~/blender-build
+        run: ls ~/blender
       - name: Checkout Blender libraries
         run: |
           mkdir ~/blender-build/lib
