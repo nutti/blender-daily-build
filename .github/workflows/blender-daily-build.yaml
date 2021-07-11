@@ -28,15 +28,11 @@ jobs:
               libxinerama-dev \
               libglew-dev \
               python3
-      # - name: Create build directory
-      #   run: mkdir ~/blender-build
       - name: Checkout Blender sources from GitHub
         uses: actions/checkout@v2
         with:
           repository: "blender/blender"
           path: blender-build/blender
-      - name: ls
-        run: ls .
       - name: Checkout Blender libraries
         run: |
           mkdir blender-build/lib
@@ -58,3 +54,8 @@ jobs:
         run: |
           cd release
           md5sum blender.tar.xz > blender.tar.xz.md5
+      - name: Upload artifact 
+        uses: actions/upload-artifact@v2
+        with:
+          name: blender
+          path: "release"
