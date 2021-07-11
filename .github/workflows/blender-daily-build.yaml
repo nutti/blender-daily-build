@@ -1,0 +1,48 @@
+name: Blender daily build
+
+on:
+  push:
+    branches:
+      - spike
+      - main
+  pull_request:
+
+jobs:
+  build_blender:
+    name: Build Blender
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+              build-essential \
+              git \
+              subversion \
+              cmake \
+              libx11-dev \
+              libxxf86vm-dev \
+              libxcursor-dev \
+              libxi-dev \
+              libxrandr-dev \
+              libxinerama-dev \
+              libglew-dev \
+              python3
+      - name: Create build directory
+        run: mkdir ~/blender-build
+      - name: Checkout Blender sources from GitHub
+        uses: actions/checkout@v2
+        with:
+          repository: "blender/blender"
+          path: ~/blender-build/blender
+      - name: Checkout Blender libraries
+        run: |
+          mkdir ~/blender-build/lib
+          cd ~/blender-build/lib
+          checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/linux_centos7_x86_64
+      - name: Build Blender
+        run: |
+          cd ~/blender-build/blender
+          make update
+          make
+      
