@@ -35,6 +35,8 @@ jobs:
         with:
           repository: "blender/blender"
           path: ~/blender-build/blender
+      - name: ls
+        run: ls ~/blender-build
       - name: Checkout Blender libraries
         run: |
           mkdir ~/blender-build/lib
