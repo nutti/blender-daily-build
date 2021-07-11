@@ -45,4 +45,14 @@ jobs:
           cd ~/blender-build/blender
           make update
           make
-      
+      - name: Compress Blender for the artifacts
+        run: |
+          mkdir ~/release
+          cp -r ~/blender-build/build_linux ~/release/blender
+          cd ~/release
+          tar Jcf blender.tar.xz blender
+          rm -rf blender
+      - name: Create MD5 checksum file
+        run: |
+          cd ~/release
+          md5sum blender.tar.xz > blender.tar.xz.md5
