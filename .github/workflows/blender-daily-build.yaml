@@ -28,33 +28,33 @@ jobs:
               libxinerama-dev \
               libglew-dev \
               python3
-      - name: Create build directory
-        run: mkdir ~/blender-build
+      # - name: Create build directory
+      #   run: mkdir ~/blender-build
       - name: Checkout Blender sources from GitHub
         uses: actions/checkout@v2
         with:
           repository: "blender/blender"
-          path: blender
+          path: blender-build/blender
       - name: ls
         run: ls .
       - name: Checkout Blender libraries
         run: |
-          mkdir ~/blender-build/lib
-          cd ~/blender-build/lib
+          mkdir blender-build/lib
+          cd blender-build/lib
           svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/linux_centos7_x86_64
       - name: Build Blender
         run: |
-          cd ~/blender-build/blender
+          cd blender-build/blender
           make update
           make
       - name: Compress Blender for the artifacts
         run: |
-          mkdir ~/release
-          cp -r ~/blender-build/build_linux ~/release/blender
-          cd ~/release
+          mkdir release
+          cp -r blender-build/build_linux release/blender
+          cd release
           tar Jcf blender.tar.xz blender
           rm -rf blender
       - name: Create MD5 checksum file
         run: |
-          cd ~/release
+          cd release
           md5sum blender.tar.xz > blender.tar.xz.md5
