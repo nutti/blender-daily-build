@@ -1,10 +1,12 @@
 name: Blender daily build
 
 on:
+  schedule:
+    - cron: "0 2 * * *"
   push:
     branches:
-      - spike
       - main
+      - ci_testing
   pull_request:
 
 jobs:
