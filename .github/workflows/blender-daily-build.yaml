@@ -1,0 +1,63 @@
+name: Blender daily build
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  push:
+    branches:
+      - main
+      - ci_testing
+  pull_request:
+
+jobs:
+  build_blender:
+    name: Build Blender
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+              build-essential \
+              git \
+              subversion \
+              cmake \
+              libx11-dev \
+              libxxf86vm-dev \
+              libxcursor-dev \
+              libxi-dev \
+              libxrandr-dev \
+              libxinerama-dev \
+              libglew-dev \
+              python3
+      - name: Checkout Blender sources from GitHub
+        uses: actions/checkout@v2
+        with:
+          repository: "blender/blender"
+          path: blender-build/blender
+      - name: Checkout Blender libraries
+        run: |
+          mkdir blender-build/lib
+          cd blender-build/lib
+          svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/linux_centos7_x86_64
+      - name: Build Blender
+        run: |
+          cd blender-build/blender
+          make update
+          make
+      - name: Compress Blender for the artifacts
+        run: |
+          mkdir release
+          cp -r blender-build/build_linux release/blender
+          cd release
+          tar Jcf blender.tar.xz blender
+          rm -rf blender
+      - name: Create MD5 checksum file
+        run: |
+          cd release
+          md5sum blender.tar.xz > blender.tar.xz.md5
+      - name: Upload artifact 
+        uses: actions/upload-artifact@v2
+        with:
+          name: blender
+          path: "release"
