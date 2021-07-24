@@ -48,7 +48,7 @@ jobs:
       - name: Compress Blender for the artifacts
         run: |
           mkdir release
-          cp -r blender-build/build_linux release/blender
+          cp -r blender-build/build_linux/bin release/blender
           cd release
           tar Jcf blender.tar.xz blender
           rm -rf blender
