@@ -30,6 +30,11 @@ jobs:
               libxrandr-dev \
               libxinerama-dev \
               libglew-dev \
+              libwayland-dev \
+              wayland-protocols \
+              libxkbcommon-dev \
+              libdbus-1-dev \
+              linux-libc-dev \
               python3
       - name: Checkout Blender sources from GitHub
         uses: actions/checkout@v2
