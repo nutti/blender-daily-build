@@ -50,11 +50,11 @@ jobs:
         run: |
           cd blender-build/blender
           make update
-          make release
+          make
       - name: Compress Blender for the artifacts
         run: |
           mkdir release
-          cp -r blender-build/build_linux_release/bin release/blender
+          cp -r blender-build/build_linux/bin release/blender
           cd release
           tar Jcf blender.tar.xz blender
           rm -rf blender
