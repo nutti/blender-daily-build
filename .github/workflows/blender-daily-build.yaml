@@ -13,7 +13,7 @@ on:
 jobs:
   build_blender:
     name: Build Blender
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Install dependencies
         run: |
@@ -29,13 +29,12 @@ jobs:
               libxi-dev \
               libxrandr-dev \
               libxinerama-dev \
-              libglew-dev \
+              libegl-dev \
               libwayland-dev \
               wayland-protocols \
               libxkbcommon-dev \
               libdbus-1-dev \
-              linux-libc-dev \
-              python3
+              linux-libc-dev
       - name: Checkout Blender sources from GitHub
         uses: actions/checkout@v2
         with:
@@ -45,7 +44,7 @@ jobs:
         run: |
           mkdir blender-build/lib
           cd blender-build/lib
-          svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/linux_centos7_x86_64
+          svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/linux_x86_64_glibc_228
       - name: Build Blender
         run: |
           cd blender-build/blender
