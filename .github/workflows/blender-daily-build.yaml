@@ -15,31 +15,15 @@ jobs:
     name: Build Blender
     runs-on: ubuntu-22.04
     steps:
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y \
-              build-essential \
-              git \
-              subversion \
-              cmake \
-              libx11-dev \
-              libxxf86vm-dev \
-              libxcursor-dev \
-              libxi-dev \
-              libxrandr-dev \
-              libxinerama-dev \
-              libegl-dev \
-              libwayland-dev \
-              wayland-protocols \
-              libxkbcommon-dev \
-              libdbus-1-dev \
-              linux-libc-dev
       - name: Checkout Blender sources from GitHub
         uses: actions/checkout@v2
         with:
           repository: "blender/blender"
           path: blender-build/blender
+      - name: Install dependencies
+        run: |
+          ./blender-build/blender/build_files/build_environment/install_linux_packages.py
+          sudo apt install -y libglfw3 libgles2-mesa-dev
       - name: Checkout Blender libraries
         run: |
           mkdir blender-build/lib
