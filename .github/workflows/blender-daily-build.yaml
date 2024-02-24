@@ -13,22 +13,25 @@ on:
 jobs:
   build_blender:
     name: Build Blender
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Blender sources from GitHub
         uses: actions/checkout@v2
         with:
           repository: "blender/blender"
           path: blender-build/blender
-      - name: Install dependencies
+      - name: Install initial packages
         run: |
-          ./blender-build/blender/build_files/build_environment/install_linux_packages.py
-          sudo apt install -y libglfw3 libgles2-mesa-dev
-      - name: Checkout Blender libraries
+          sudo apt update
+          sudo apt install python3 git git-lfs
+      - name: Install basic building environment
         run: |
-          mkdir blender-build/lib
-          cd blender-build/lib
-          svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/linux_x86_64_glibc_228
+          cd blender-build/blender
+          ./build_files/build_environment/install_linux_packages.py
+      - name: Download libraries
+        run: |
+          cd blender-build/blender
+          ./build_files/utils/make_update.py --use-linux-libraries
       - name: Build Blender
         run: |
           cd blender-build/blender
