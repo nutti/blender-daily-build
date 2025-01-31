@@ -49,7 +49,7 @@ jobs:
           cd release
           md5sum blender.tar.xz > blender.tar.xz.md5
       - name: Upload artifact 
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: blender
           path: "release"
