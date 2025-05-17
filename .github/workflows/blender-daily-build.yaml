@@ -15,11 +15,11 @@ jobs:
     name: Build Blender
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Blender sources from GitHub
-        uses: actions/checkout@v2
-        with:
-          repository: "blender/blender"
-          path: blender-build/blender
+      - name: Checkout Blender source code from Blender official repository
+        run: |
+          mkdir -p blender-build
+          cd blender-build
+          git clone https://projects.blender.org/blender/blender.git
       - name: Install initial packages
         run: |
           sudo apt update
