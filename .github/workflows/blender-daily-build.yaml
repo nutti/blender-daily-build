@@ -37,6 +37,9 @@ jobs:
           cd blender-build/blender
           make update
           make
+      - name: Test Blender Binary
+        run: |
+          ./blender-build/build_linux/bin/blender --background --factory-startup -noaudio
       - name: Compress Blender for the artifacts
         run: |
           mkdir release
