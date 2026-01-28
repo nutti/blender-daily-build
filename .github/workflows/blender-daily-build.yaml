@@ -24,6 +24,10 @@ jobs:
         run: |
           sudo apt update
           sudo apt install python3 git git-lfs
+          # Blender is requiring gcc 14, while Ubuntu 24.04 runner has gcc 13.
+          sudo apt install gcc-14 g++-14
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
       - name: Install basic building environment
         run: |
           cd blender-build/blender
