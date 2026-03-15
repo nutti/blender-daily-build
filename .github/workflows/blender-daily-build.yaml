@@ -20,10 +20,14 @@ jobs:
           mkdir -p blender-build
           cd blender-build
           git clone https://projects.blender.org/blender/blender.git
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
       - name: Install initial packages
         run: |
           sudo apt update
-          sudo apt install python3 git git-lfs
+          sudo apt install git git-lfs
           # Blender is requiring gcc 14, while Ubuntu 24.04 runner has gcc 13.
           sudo apt install gcc-14 g++-14
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
